@@ -294,11 +294,24 @@ export default function HomePage() {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          {["Santander", "BV", "Solfácil", "Outros parceiros"].map((name, i) => (
-            <motion.div key={name} initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="grid h-32 place-items-center rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
-              <span className={`text-3xl font-black ${name === "Santander" ? "text-red-600" : name === "BV" ? "text-blue-500" : name === "Solfácil" ? "text-slate-950" : "text-blue-950"}`}>
-                {name}
-              </span>
+          {[
+            { name: "Santander", logo: "/logo-santander.png" },
+            { name: "BV", logo: "/logo-bv.png" },
+            { name: "Solfácil", logo: "/logo-solfacil.png" },
+            { name: "Outros parceiros", logo: null },
+          ].map((item, i) => (
+            <motion.div key={item.name} initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="grid h-32 place-items-center rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
+              {item.logo ? (
+                <Image
+                  src={item.logo}
+                  alt={item.name}
+                  width={230}
+                  height={90}
+                  className="max-h-20 w-auto object-contain"
+                />
+              ) : (
+                <span className="text-2xl font-black text-blue-950">Outros parceiros</span>
+              )}
             </motion.div>
           ))}
         </div>
