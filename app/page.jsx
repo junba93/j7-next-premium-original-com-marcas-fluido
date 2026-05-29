@@ -104,11 +104,7 @@ export default function HomePage() {
 
           <nav className="hidden items-center gap-8 text-sm font-bold text-blue-950 lg:flex">
             <a href="#inicio" className="hover:text-amber-500">Início</a>
-            <a href="#solucoes" className="hover:text-amber-500">Soluções</a>
             <a href="#quem-somos" className="hover:text-amber-500">Quem Somos</a>
-            <a href="#depoimentos" className="hover:text-amber-500">Depoimentos</a>
-            <a href="#marcas" className="hover:text-amber-500">Marcas</a>
-            <a href="#processo" className="hover:text-amber-500">Como funciona</a>
             <a href="#projetos" className="hover:text-amber-500">Projetos</a>
             <a href="#financiamento" className="hover:text-amber-500">Financiamento</a>
             <a href="#contato" className="hover:text-amber-500">Contato</a>
