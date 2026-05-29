@@ -77,6 +77,7 @@ Tipo de imóvel: ${form.tipo}`
 
 
 function SolarCalculator() {
+  const [nome, setNome] = useState("")
   const [cidade, setCidade] = useState("")
   const [conta, setConta] = useState("")
   const [resultado, setResultado] = useState(null)
@@ -100,11 +101,10 @@ function SolarCalculator() {
         .trim()
     )
 
-    if (!contaNumero || contaNumero <= 0) return
+    if (!nome.trim() || !cidade.trim() || !contaNumero || contaNumero <= 0) return
 
     const tarifaMedia = 0.95
     const consumoEstimado = Math.round(contaNumero / tarifaMedia)
-
     const sistemaKwp = Math.max(2, Math.ceil((consumoEstimado / 120) * 10) / 10)
 
     const economiaMin = Math.round(contaNumero * 0.8)
@@ -114,26 +114,30 @@ function SolarCalculator() {
     const investimentoMax = sistemaKwp * 3200
 
     setResultado({
+      nome,
+      cidade,
+      contaNumero,
       consumoEstimado,
       sistemaKwp,
       economiaMin,
       economiaMax,
       investimentoMin,
       investimentoMax,
-      cidade,
-      contaNumero,
     })
   }
 
   function enviarWhatsApp() {
     if (!resultado) return
 
-    const mensagem = `Olá, fiz a simulação no site da J7 Energia Solar.
+    const mensagem = `Olá, fiz uma simulação no site da J7 Energia Solar.
 
-Cidade: ${resultado.cidade || "Não informado"}
+Nome: ${resultado.nome}
+Cidade: ${resultado.cidade}
 Conta média: ${formatCurrency(resultado.contaNumero)}
+
 Consumo estimado: ${resultado.consumoEstimado} kWh/mês
 Sistema sugerido: ${resultado.sistemaKwp.toFixed(1).replace(".", ",")} kWp
+Economia estimada: ${formatCurrency(resultado.economiaMin)} a ${formatCurrency(resultado.economiaMax)} por mês
 
 Gostaria de receber uma proposta personalizada.`
 
@@ -149,7 +153,7 @@ Gostaria de receber uma proposta personalizada.`
             Descubra quanto você pode economizar
           </motion.h2>
           <motion.p variants={fadeUp} className="mt-5 leading-7 text-slate-600">
-            Faça uma simulação rápida com base no valor médio da sua conta de energia. O resultado é uma estimativa inicial para ajudar você a entender o potencial de economia.
+            Faça uma simulação rápida com seu nome, cidade e valor médio da conta de energia.
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-8 grid gap-4">
@@ -168,8 +172,8 @@ Gostaria de receber uma proposta personalizada.`
                 <TrendingDown size={25} />
               </div>
               <div>
-                <p className="font-black text-blue-950">Economia estimada</p>
-                <p className="mt-1 text-sm leading-6 text-slate-600">A proposta final depende da análise da conta, local de instalação e condições técnicas.</p>
+                <p className="font-black text-blue-950">Lead qualificado</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">Ao solicitar a proposta, os dados da simulação já chegam organizados no WhatsApp da J7.</p>
               </div>
             </div>
           </motion.div>
@@ -178,12 +182,21 @@ Gostaria de receber uma proposta personalizada.`
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.7 }} className="rounded-[2rem] bg-blue-950 p-6 shadow-2xl md:p-8">
           <form onSubmit={calcular} className="rounded-[1.5rem] bg-white p-6 md:p-8">
             <h3 className="text-2xl font-black text-blue-950">Faça sua simulação</h3>
-            <p className="mt-2 text-sm text-slate-600">Informe sua cidade e o valor médio da sua conta de energia.</p>
+            <p className="mt-2 text-sm text-slate-600">Informe seus dados para calcular uma estimativa inicial.</p>
 
             <div className="mt-6 grid gap-4">
               <input
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                required
+                placeholder="Nome completo"
+                className="rounded-2xl border border-slate-200 px-4 py-4 outline-none transition duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+              />
+
+              <input
                 value={cidade}
                 onChange={(e) => setCidade(e.target.value)}
+                required
                 placeholder="Cidade"
                 className="rounded-2xl border border-slate-200 px-4 py-4 outline-none transition duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
               />
@@ -191,12 +204,17 @@ Gostaria de receber uma proposta personalizada.`
               <input
                 value={conta}
                 onChange={(e) => setConta(e.target.value)}
-                placeholder="Valor médio da conta. Ex: 650"
+                required
+                placeholder="Valor médio da conta de energia. Ex: 650"
                 className="rounded-2xl border border-slate-200 px-4 py-4 outline-none transition duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
               />
 
+              <p className="text-xs leading-5 text-slate-500">
+                Seus dados são utilizados apenas para elaboração da proposta e não serão compartilhados.
+              </p>
+
               <button type="submit" className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-green-600 px-7 py-4 font-black text-white shadow-xl shadow-green-600/25 transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:bg-green-500">
-                Calcular economia
+                Simular economia
               </button>
             </div>
           </form>
@@ -206,6 +224,16 @@ Gostaria de receber uma proposta personalizada.`
               <p className="text-sm font-black uppercase tracking-widest text-amber-300">Resultado estimado</p>
 
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-sm text-white/70">Cliente</p>
+                  <p className="mt-1 text-2xl font-black">{resultado.nome}</p>
+                </div>
+
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-sm text-white/70">Cidade</p>
+                  <p className="mt-1 text-2xl font-black">{resultado.cidade}</p>
+                </div>
+
                 <div className="rounded-2xl bg-white/10 p-4">
                   <p className="text-sm text-white/70">Consumo estimado</p>
                   <p className="mt-1 text-2xl font-black">{resultado.consumoEstimado} kWh/mês</p>
