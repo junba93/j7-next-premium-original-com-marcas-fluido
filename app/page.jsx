@@ -6,7 +6,7 @@ import { useState } from "react"
 import {
   MessageCircle, CalendarDays, CreditCard, ShieldCheck, MapPin,
   Home, Building2, Tractor, Wrench, FileText, Search, ClipboardCheck,
-  Zap, ArrowRight, Star, SunMedium
+  Zap, ArrowRight, Star, SunMedium, Calculator, TrendingDown
 } from "lucide-react"
 
 const phoneNumber = "5581981225438"
@@ -72,6 +72,173 @@ Tipo de imóvel: ${form.tipo}`
         <MessageCircle size={22} /> Enviar para o WhatsApp
       </button>
     </form>
+  )
+}
+
+
+function SolarCalculator() {
+  const [cidade, setCidade] = useState("")
+  const [conta, setConta] = useState("")
+  const [resultado, setResultado] = useState(null)
+
+  function formatCurrency(value) {
+    return value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      maximumFractionDigits: 0,
+    })
+  }
+
+  function calcular(e) {
+    e.preventDefault()
+
+    const contaNumero = Number(
+      conta
+        .replace("R$", "")
+        .replace(/\./g, "")
+        .replace(",", ".")
+        .trim()
+    )
+
+    if (!contaNumero || contaNumero <= 0) return
+
+    const tarifaMedia = 0.95
+    const consumoEstimado = Math.round(contaNumero / tarifaMedia)
+
+    const sistemaKwp = Math.max(2, Math.ceil((consumoEstimado / 120) * 10) / 10)
+
+    const economiaMin = Math.round(contaNumero * 0.8)
+    const economiaMax = Math.round(contaNumero * 0.95)
+
+    const investimentoMin = sistemaKwp * 2400
+    const investimentoMax = sistemaKwp * 3200
+
+    setResultado({
+      consumoEstimado,
+      sistemaKwp,
+      economiaMin,
+      economiaMax,
+      investimentoMin,
+      investimentoMax,
+      cidade,
+      contaNumero,
+    })
+  }
+
+  function enviarWhatsApp() {
+    if (!resultado) return
+
+    const mensagem = `Olá, fiz a simulação no site da J7 Energia Solar.
+
+Cidade: ${resultado.cidade || "Não informado"}
+Conta média: ${formatCurrency(resultado.contaNumero)}
+Consumo estimado: ${resultado.consumoEstimado} kWh/mês
+Sistema sugerido: ${resultado.sistemaKwp.toFixed(1).replace(".", ",")} kWp
+
+Gostaria de receber uma proposta personalizada.`
+
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(mensagem)}`, "_blank")
+  }
+
+  return (
+    <section id="calculadora" className="bg-slate-50 px-5 py-24 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }} variants={stagger}>
+          <motion.p variants={fadeUp} className="text-sm font-black uppercase tracking-widest text-amber-500">Calculadora solar</motion.p>
+          <motion.h2 variants={fadeUp} className="mt-2 text-3xl font-black text-blue-950 md:text-5xl">
+            Descubra quanto você pode economizar
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mt-5 leading-7 text-slate-600">
+            Faça uma simulação rápida com base no valor médio da sua conta de energia. O resultado é uma estimativa inicial para ajudar você a entender o potencial de economia.
+          </motion.p>
+
+          <motion.div variants={fadeUp} className="mt-8 grid gap-4">
+            <div className="flex items-start gap-4 rounded-3xl bg-white p-5 shadow-lg">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-amber-100 text-amber-600">
+                <Calculator size={25} />
+              </div>
+              <div>
+                <p className="font-black text-blue-950">Simulação rápida</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">Ideal para ter uma primeira noção do sistema indicado para seu consumo.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 rounded-3xl bg-white p-5 shadow-lg">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-green-100 text-green-600">
+                <TrendingDown size={25} />
+              </div>
+              <div>
+                <p className="font-black text-blue-950">Economia estimada</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">A proposta final depende da análise da conta, local de instalação e condições técnicas.</p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.7 }} className="rounded-[2rem] bg-blue-950 p-6 shadow-2xl md:p-8">
+          <form onSubmit={calcular} className="rounded-[1.5rem] bg-white p-6 md:p-8">
+            <h3 className="text-2xl font-black text-blue-950">Faça sua simulação</h3>
+            <p className="mt-2 text-sm text-slate-600">Informe sua cidade e o valor médio da sua conta de energia.</p>
+
+            <div className="mt-6 grid gap-4">
+              <input
+                value={cidade}
+                onChange={(e) => setCidade(e.target.value)}
+                placeholder="Cidade"
+                className="rounded-2xl border border-slate-200 px-4 py-4 outline-none transition duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+              />
+
+              <input
+                value={conta}
+                onChange={(e) => setConta(e.target.value)}
+                placeholder="Valor médio da conta. Ex: 650"
+                className="rounded-2xl border border-slate-200 px-4 py-4 outline-none transition duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+              />
+
+              <button type="submit" className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-green-600 px-7 py-4 font-black text-white shadow-xl shadow-green-600/25 transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:bg-green-500">
+                Calcular economia
+              </button>
+            </div>
+          </form>
+
+          {resultado && (
+            <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="mt-6 rounded-[1.5rem] bg-white/10 p-6 text-white backdrop-blur">
+              <p className="text-sm font-black uppercase tracking-widest text-amber-300">Resultado estimado</p>
+
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-sm text-white/70">Consumo estimado</p>
+                  <p className="mt-1 text-2xl font-black">{resultado.consumoEstimado} kWh/mês</p>
+                </div>
+
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-sm text-white/70">Sistema sugerido</p>
+                  <p className="mt-1 text-2xl font-black">{resultado.sistemaKwp.toFixed(1).replace(".", ",")} kWp</p>
+                </div>
+
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-sm text-white/70">Economia mensal</p>
+                  <p className="mt-1 text-2xl font-black">{formatCurrency(resultado.economiaMin)} a {formatCurrency(resultado.economiaMax)}</p>
+                </div>
+
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-sm text-white/70">Investimento aproximado</p>
+                  <p className="mt-1 text-2xl font-black">{formatCurrency(resultado.investimentoMin)} a {formatCurrency(resultado.investimentoMax)}</p>
+                </div>
+              </div>
+
+              <p className="mt-5 text-sm leading-6 text-white/70">
+                Esta é uma estimativa inicial. Para uma proposta precisa, analisamos sua conta de energia e o local de instalação.
+              </p>
+
+              <button onClick={enviarWhatsApp} className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-green-600 px-7 py-4 font-black text-white shadow-xl shadow-green-600/25 transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:bg-green-500">
+                <MessageCircle size={22} /> Receber proposta personalizada
+              </button>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </section>
   )
 }
 
@@ -424,6 +591,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <SolarCalculator />
 
       <section id="financiamento" className="mx-auto grid max-w-7xl gap-10 px-5 py-24 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
         <div>
