@@ -105,6 +105,7 @@ export default function HomePage() {
           <nav className="hidden items-center gap-8 text-sm font-bold text-blue-950 lg:flex">
             <a href="#inicio" className="hover:text-amber-500">Início</a>
             <a href="#solucoes" className="hover:text-amber-500">Soluções</a>
+            <a href="#quem-somos" className="hover:text-amber-500">Quem Somos</a>
             <a href="#marcas" className="hover:text-amber-500">Marcas</a>
             <a href="#processo" className="hover:text-amber-500">Como funciona</a>
             <a href="#projetos" className="hover:text-amber-500">Projetos</a>
@@ -200,6 +201,47 @@ export default function HomePage() {
         </motion.div>
       </section>
 
+
+
+      <section id="quem-somos" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <motion.div initial={{ opacity: 0, x: -35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.7, ease: "easeOut" }} className="relative overflow-hidden rounded-[2rem] shadow-2xl">
+            <div className="relative h-[460px]">
+              <Image src="/projeto-residencial.jpg" alt="Projeto residencial J7 Energia Solar" fill className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-950/75 via-transparent to-transparent" />
+              <div className="absolute bottom-0 p-8 text-white">
+                <p className="text-sm font-black uppercase tracking-widest text-amber-300">J7 Energia Solar</p>
+                <h2 className="mt-2 text-3xl font-black">Energia solar com compromisso técnico e atendimento próximo</h2>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }} variants={stagger}>
+            <motion.p variants={fadeUp} className="text-sm font-black uppercase tracking-widest text-amber-500">Quem somos</motion.p>
+            <motion.h2 variants={fadeUp} className="mt-2 text-3xl font-black text-blue-950 md:text-5xl">A J7 Energia Solar une experiência, tecnologia e compromisso com cada cliente</motion.h2>
+            <motion.p variants={fadeUp} className="mt-6 leading-8 text-slate-600">
+              A J7 Energia Solar é uma integradora especializada em projetos fotovoltaicos em Pernambuco, atendendo residências, empresas, condomínios e propriedades rurais com soluções completas, seguras e personalizadas.
+            </motion.p>
+            <motion.p variants={fadeUp} className="mt-4 leading-8 text-slate-600">
+              À frente da empresa está <strong className="text-blue-950">Junior Barreto</strong>, profissional com formação técnica e experiência nas áreas de tecnologia, eletrotécnica e energia solar. Sua atuação combina visão técnica, gestão e compromisso com o crescimento da geração distribuída no estado.
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="mt-8 grid gap-4 sm:grid-cols-2">
+              {[
+                ["+5 anos", "de atuação no setor solar"],
+                ["Pernambuco", "atendimento regional"],
+                ["Pós-venda", "monitoramento e suporte"],
+                ["Projetos", "residenciais, comerciais e rurais"],
+              ].map(([title, text]) => (
+                <div key={title} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                  <p className="text-2xl font-black text-blue-950">{title}</p>
+                  <p className="mt-2 text-sm text-slate-600">{text}</p>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
       <section id="marcas" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }} variants={stagger} className="text-center">
@@ -354,7 +396,7 @@ export default function HomePage() {
             </div>
             <p className="mt-3 text-sm leading-6 text-white/70">Energia solar com segurança, economia e suporte profissional em Pernambuco.</p>
           </div>
-          <div><p className="font-black">Links rápidos</p><p className="mt-3 text-sm text-white/70">Início<br/>Soluções<br/>Marcas<br/>Projetos<br/>Financiamento</p></div>
+          <div><p className="font-black">Links rápidos</p><p className="mt-3 text-sm text-white/70">Início<br/>Soluções<br/>Quem Somos<br/>Marcas<br/>Projetos<br/>Financiamento</p></div>
           <div><p className="font-black">Serviços</p><p className="mt-3 text-sm text-white/70">Residencial<br/>Comercial<br/>Rural<br/>Manutenção</p></div>
           <div><p className="font-black">Fale conosco</p><p className="mt-3 text-sm text-white/70">(81) 98122-5438<br/>@j7.energia<br/>Pernambuco</p></div>
         </div>
