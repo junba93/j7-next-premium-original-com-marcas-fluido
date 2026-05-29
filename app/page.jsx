@@ -293,7 +293,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-white text-slate-950">
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/20 bg-white/90 shadow-sm backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <a href="#inicio" className="relative h-14 w-52">
+          <a href="#inicio" className="relative h-12 w-36 sm:h-14 sm:w-52">
             <Image src="/logo-j7.png" alt="J7 Energia Solar" fill priority className="object-contain object-left" />
           </a>
 
@@ -305,7 +305,7 @@ export default function HomePage() {
             <a href="#contato" className="hover:text-amber-500">Contato</a>
           </nav>
 
-          <a href={whatsapp} className="hidden rounded-2xl bg-green-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-green-600/25 transition hover:-translate-y-0.5 hover:bg-green-500 md:inline-flex">
+          <a href={whatsapp} className="inline-flex rounded-2xl bg-green-600 px-3 py-2 text-xs font-black text-white shadow-lg shadow-green-600/25 transition hover:-translate-y-0.5 hover:bg-green-500 sm:px-5 sm:py-3 sm:text-sm">
             Solicitar orçamento
           </a>
         </div>
