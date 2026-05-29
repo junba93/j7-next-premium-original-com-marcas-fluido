@@ -106,6 +106,7 @@ export default function HomePage() {
             <a href="#inicio" className="hover:text-amber-500">Início</a>
             <a href="#solucoes" className="hover:text-amber-500">Soluções</a>
             <a href="#quem-somos" className="hover:text-amber-500">Quem Somos</a>
+            <a href="#depoimentos" className="hover:text-amber-500">Depoimentos</a>
             <a href="#marcas" className="hover:text-amber-500">Marcas</a>
             <a href="#processo" className="hover:text-amber-500">Como funciona</a>
             <a href="#projetos" className="hover:text-amber-500">Projetos</a>
@@ -243,6 +244,53 @@ export default function HomePage() {
         </div>
       </section>
 
+
+      <section id="depoimentos" className="bg-slate-50 px-5 py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }} variants={stagger} className="mx-auto max-w-3xl text-center">
+            <motion.p variants={fadeUp} className="text-sm font-black uppercase tracking-widest text-amber-500">Depoimentos</motion.p>
+            <motion.h2 variants={fadeUp} className="mt-2 text-3xl font-black text-blue-950 md:text-5xl">O que nossos clientes dizem</motion.h2>
+            <motion.p variants={fadeUp} className="mt-5 leading-7 text-slate-600">
+              Clientes que confiaram na J7 Energia Solar para economizar com segurança, qualidade e acompanhamento profissional.
+            </motion.p>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.18 }} variants={stagger} className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              ["Carlos", "Recife", "Atendimento excelente do início ao fim. Instalação rápida, equipe organizada e suporte sempre que precisamos."],
+              ["Mailson", "Escada", "Fomos muito bem atendidos pela J7. Todo o processo foi explicado de forma clara e transparente."],
+              ["Cláudia", "Recife", "Conseguimos reduzir significativamente nossos custos com energia. Recomendo a empresa pela qualidade do serviço."],
+              ["Paulo", "Bezerros", "Projeto bem dimensionado, instalação dentro do prazo e excelente acompanhamento após a entrega."],
+              ["Helena", "Jaboatão dos Guararapes", "Desde o primeiro contato até a instalação, tudo foi conduzido com profissionalismo e atenção aos detalhes."],
+              ["Adamastor", "Ipojuca", "Ótimo atendimento, equipamentos de qualidade e uma equipe que realmente entende do assunto."],
+            ].map(([name, city, text], i) => (
+              <motion.div key={name} variants={fadeUp} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                <div className="text-lg text-amber-400">★★★★★</div>
+                <p className="mt-5 leading-7 text-slate-600">“{text}”</p>
+                <div className="mt-6 border-t border-slate-100 pt-5">
+                  <p className="font-black text-blue-950">{name}</p>
+                  <p className="text-sm text-slate-500">{city} - PE</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mt-12 grid gap-4 rounded-[2rem] bg-blue-950 p-8 text-white shadow-2xl md:grid-cols-5">
+            {[
+              "Atendimento em todo Pernambuco",
+              "Projetos residenciais, comerciais e rurais",
+              "Financiamento facilitado",
+              "Equipamentos de alta qualidade",
+              "Suporte e pós-venda especializado",
+            ].map((item) => (
+              <div key={item} className="rounded-2xl bg-white/8 p-4 text-center text-sm font-bold text-white/85">
+                ✅ {item}
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       <section id="marcas" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }} variants={stagger} className="text-center">
           <motion.p variants={fadeUp} className="text-sm font-black uppercase tracking-widest text-amber-500">Marcas que trabalhamos</motion.p>
@@ -325,6 +373,62 @@ export default function HomePage() {
         </div>
       </section>
 
+
+      <section id="atuacao" className="px-5 py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }} variants={stagger}>
+              <motion.p variants={fadeUp} className="text-sm font-black uppercase tracking-widest text-amber-500">Números da J7</motion.p>
+              <motion.h2 variants={fadeUp} className="mt-2 text-3xl font-black text-blue-950 md:text-5xl">Atuação sólida em Pernambuco</motion.h2>
+              <motion.p variants={fadeUp} className="mt-5 leading-7 text-slate-600">
+                A J7 Energia Solar atende clientes de diferentes perfis, com projetos desenvolvidos para economia, segurança e desempenho.
+              </motion.p>
+
+              <motion.div variants={fadeUp} className="mt-8 grid gap-5 sm:grid-cols-2">
+                {[
+                  ["+5", "anos de experiência"],
+                  ["+100", "projetos executados"],
+                  ["+1 MWp", "em sistemas projetados"],
+                  ["+20", "cidades atendidas"],
+                ].map(([number, label]) => (
+                  <div key={label} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                    <p className="text-4xl font-black text-blue-950">{number}</p>
+                    <p className="mt-2 text-sm font-semibold text-slate-600">{label}</p>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, x: 35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.7, ease: "easeOut" }} className="rounded-[2rem] bg-blue-950 p-8 text-white shadow-2xl">
+              <p className="text-sm font-black uppercase tracking-widest text-amber-400">Mapa de atuação</p>
+              <h3 className="mt-3 text-3xl font-black">Atendimento em várias regiões de Pernambuco</h3>
+              <p className="mt-4 leading-7 text-white/70">
+                Atuamos em cidades estratégicas do estado, oferecendo projetos residenciais, comerciais, rurais e serviços de manutenção.
+              </p>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                {[
+                  "Recife",
+                  "Jaboatão dos Guararapes",
+                  "Olinda",
+                  "Paulista",
+                  "Goiana",
+                  "Ipojuca",
+                  "Escada",
+                  "Gravatá",
+                  "Bezerros",
+                  "Caruaru",
+                ].map((city) => (
+                  <div key={city} className="rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-sm font-bold text-white/85">
+                    📍 {city}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       <section id="financiamento" className="mx-auto grid max-w-7xl gap-10 px-5 py-24 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
         <div>
           <p className="text-sm font-black uppercase tracking-widest text-amber-500">Financiamento facilitado</p>
@@ -396,7 +500,7 @@ export default function HomePage() {
             </div>
             <p className="mt-3 text-sm leading-6 text-white/70">Energia solar com segurança, economia e suporte profissional em Pernambuco.</p>
           </div>
-          <div><p className="font-black">Links rápidos</p><p className="mt-3 text-sm text-white/70">Início<br/>Soluções<br/>Quem Somos<br/>Marcas<br/>Projetos<br/>Financiamento</p></div>
+          <div><p className="font-black">Links rápidos</p><p className="mt-3 text-sm text-white/70">Início<br/>Soluções<br/>Quem Somos<br/>Depoimentos<br/>Marcas<br/>Projetos<br/>Financiamento</p></div>
           <div><p className="font-black">Serviços</p><p className="mt-3 text-sm text-white/70">Residencial<br/>Comercial<br/>Rural<br/>Manutenção</p></div>
           <div><p className="font-black">Fale conosco</p><p className="mt-3 text-sm text-white/70">(81) 98122-5438<br/>@j7.energia<br/>Pernambuco</p></div>
         </div>
